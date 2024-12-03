@@ -1,0 +1,28 @@
+{
+    "name": "godruoyi/php-parallel-rust",
+    "license": "MIT",
+    "autoload-dev": {
+        "psr-4": {
+            "Parallel\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Godruoyi",
+            "email": "godruoyi@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "php": ">=8.2",
+        "guzzlehttp/psr7": "^2.7",
+        "pestphp/pest": "*"
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
