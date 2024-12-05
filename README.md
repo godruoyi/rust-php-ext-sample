@@ -4,11 +4,16 @@
 
 ```php
 use Parallel\Parallel;
-use GuzzleHttp\Psr7\Request;
 
 $responses = Parallel::run([
-    new Request('GET', 'https://httpbin.org/delay/1'),
-    new Request('GET', 'https://httpbin.org/delay/2'),
-    new Request('GET', 'https://httpbin.org/delay/3'),
+    function () {
+        return file_get_contents('https://www.google.com');
+    },
+    function () {
+        return file_get_contents('https://www.bing.com');
+    },
+    function () {
+        return file_get_contents('https://www.yahoo.com');
+    },
 ]);
 ```

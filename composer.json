@@ -14,11 +14,11 @@
     ],
     "require-dev": {
         "php": ">=8.2",
-        "guzzlehttp/psr7": "^2.7",
-        "pestphp/pest": "*"
+        "pestphp/pest": "*",
+        "laravel/pint": "^1.18"
     },
     "scripts": {
-        "test": "vendor/bin/pest"
+        "test": "cargo build && php -d extension=target/debug/libphp_parallel_rust.dylib vendor/bin/pest"
     },
     "config": {
         "allow-plugins": {
