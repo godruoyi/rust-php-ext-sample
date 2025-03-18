@@ -13,8 +13,54 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+
       - name: Format
         run: cargo fmt --all -- --check
 
       - name: Clippy
         run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.2', '8.3', '8.4']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, dom
+          tools: composer:v2
+
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Build extension
+        run: cargo build --workspace --all-features
+
+      - name: Run tests on Linux
+        if: runner.os == 'Linux'
+        run: php -d extension=$(pwd)/target/debug/libphp_parallel_rust.so vendor/bin/pest
+
+      - name: Run tests on macOS
+        if: runner.os == 'macOS'
+        run: php -d extension=$(pwd)/target/debug/libphp_parallel_rust.dylib vendor/bin/pest
