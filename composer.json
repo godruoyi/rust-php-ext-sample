@@ -1,6 +1,7 @@
 {
-    "name": "godruoyi/php-parallel-rust",
+    "name": "godruoyi/php-parallel",
     "license": "MIT",
+    "type": "php-ext",
     "autoload-dev": {
         "psr-4": {
             "Parallel\\Tests\\": "tests/"
@@ -24,5 +25,9 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
+    },
+    "php-ext": {
+        "extension-name": "php_parallel",
+        "description": "PHP extension for parallel computing"
     }
 }
