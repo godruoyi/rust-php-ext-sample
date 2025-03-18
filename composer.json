@@ -2,6 +2,9 @@
     "name": "godruoyi/php-parallel",
     "license": "MIT",
     "type": "php-ext",
+    "require": {
+        "php": ">=8.2"
+    },
     "autoload-dev": {
         "psr-4": {
             "Parallel\\Tests\\": "tests/"
@@ -14,8 +17,7 @@
         }
     ],
     "require-dev": {
-        "php": ">=8.2",
-        "pestphp/pest": "*",
+      "pestphp/pest": "*",
         "laravel/pint": "^1.18"
     },
     "scripts": {
@@ -29,5 +31,7 @@
     "php-ext": {
         "extension-name": "php_parallel",
         "description": "PHP extension for parallel computing"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
