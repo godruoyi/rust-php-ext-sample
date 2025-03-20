@@ -1,7 +1,7 @@
 use phper::functions::Argument;
 use phper::modules::Module;
+use phper::php_get_module;
 use phper::values::ZVal;
-use phper::{echo, php_get_module};
 
 fn say_hello(arguments: &mut [ZVal]) -> phper::Result<String> {
     let name = arguments[0].expect_z_str()?.to_str()?;
