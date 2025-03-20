@@ -1,9 +1,9 @@
 {
-    "name": "godruoyi/php-parallel",
+    "name": "godruoyi/rust-php-ext-sample",
     "license": "MIT",
-    "type": "php-ext",
-    "require": {
-        "php": ">=8.2"
+    "type": "composer-plugin",
+    "extra": {
+        "class": "OpenDAL\\Composer\\InstallerPlugin"
     },
     "autoload-dev": {
         "psr-4": {
@@ -16,8 +16,12 @@
             "email": "godruoyi@gmail.com"
         }
     ],
+    "require": {
+        "php": ">=8.2",
+        "composer-plugin-api": "^2.0"
+    },
     "require-dev": {
-      "pestphp/pest": "*",
+        "pestphp/pest": "*",
         "laravel/pint": "^1.18"
     },
     "scripts": {

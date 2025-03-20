@@ -1,38 +1,21 @@
-# Run PHP code in parallel with the powerful Rust
+# Write a PHP extension in Rust
 
-This package allows you to run PHP code in parallel using the powerful Rust language.
+This is a test project, mainly used to explore how to write PHP extensions using Rust and 
+install them through Composer directly without PECL and PIE.
 
-**Note:** This package is still in development and not ready for production use.
+## Goals
 
-## Demo
-
-```php
-use Parallel\Parallel;
-
-$responses = Parallel::run([
-    function () {
-        return file_get_contents('https://www.google.com');
-    },
-    function () {
-        return file_get_contents('https://www.bing.com');
-    },
-    function () {
-        return file_get_contents('https://www.yahoo.com');
-    },
-]);
-
-// or 
-
-$results = Parallel::run([
-    function () {
-        // do something 1
-        return 'done 1';
-    },
-    function () {
-        // do something 2
-        return 'done 2';
-    },
-]);
-
-assert($responses[0] === 'done 1');
 ```
+composer require <vendor>/<package>
+```
+
+- [x] Write a simple PHP extension in Rust
+- [ ] Build and publish the pre-compiled extension to GitHub releases by using GitHub Actions
+- [ ] Install the extension through Composer
+  - [ ] Add `post-install` script in `composer.json` to download the pre-compiled extension
+  - [ ] Make sure the pre-compiled extension is matched with user's OS and PHP version
+  - [ ] Exit and show error message if the extension is not available for the user's OS and PHP version
+  - [ ] Investigate is it possible to build the extension on the user's machine
+  - [ ] Using composer-plugin for the installation script
+- [ ] Test the extension in a PHP script
+- [ ] These all operations should be integrated with GitHub Actions

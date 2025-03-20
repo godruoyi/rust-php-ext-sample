@@ -1,20 +1,11 @@
 <?php
 
 it('basic test', function () {
-    if (! class_exists('Parallel\Parallel')) {
-        $this->markTestSkipped('This test requires the parallel extension');
+    if (! extension_loaded('rust_php_ext_sample')) {
+        $this->markTestSkipped('The rust_php_ext_sample extension is not available.');
     }
 
-    $parallel = new Parallel\Parallel;
+    $hello = rust_php_ext_sample('World');
 
-    $this->assertInstanceof(Parallel\Parallel::class, $parallel);
-    $this->assertObjectHasProperty('test', $parallel);
-    $this->assertEquals('test', $parallel->test);
-
-    $parallel->test = 'test2';
-    $this->assertEquals('test2', $parallel->test);
-
-    $result = $parallel->run(1);
-
-    $this->assertIsArray($result);
+    expect($hello)->toBe('Hello World');
 });
