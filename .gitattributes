@@ -1,0 +1,13 @@
+* text=auto
+
+/src export-ignore
+/tests export-ignore
+/.github export-ignore
+/target export-ignore
+.gitignore export-ignore
+.rustfmt.toml export-ignore
+.build.rs export-ignore
+Cargo.lock export-ignore
+Cargo.toml export-ignore
+config.m4 export-ignore
+phpunit.xml export-ignore

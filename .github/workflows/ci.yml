@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  check:
+  rust-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -54,7 +54,13 @@ jobs:
       - name: Install PHP dependencies
         run: composer install --prefer-dist --no-progress
 
-      - name: Build extension
+      - name: Install Laravel Pint
+        run: composer require laravel/pint --dev
+
+      - name: PHP Code Style Check
+        run: vendor/bin/pint --test
+
+      - name: Build PHP extension
         run: cargo build --workspace --all-features
 
       - name: Run tests on Linux

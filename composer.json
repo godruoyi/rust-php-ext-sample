@@ -1,40 +1,28 @@
 {
-    "name": "godruoyi/rust-php-ext-sample",
-    "license": "MIT",
+    "name": "godruoyi/rust-php-extension-sample",
+    "description": "A sample extension for PHP written in Rust",
     "type": "composer-plugin",
-    "extra": {
-        "class": "OpenDAL\\Composer\\InstallerPlugin"
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Parallel\\Tests\\": "tests/"
-        }
-    },
+    "license": "MIT",
     "authors": [
         {
-            "name": "Godruoyi",
+            "name": "godruoyi",
             "email": "godruoyi@gmail.com"
         }
     ],
     "require": {
-        "php": ">=8.2",
-        "composer-plugin-api": "^2.0"
+        "php": ">=8.1",
+        "composer-plugin-api": "^1.0 || ^2.0"
     },
     "require-dev": {
-        "pestphp/pest": "*",
-        "laravel/pint": "^1.18"
+        "composer/composer": "^1.0 || ^2.0"
     },
-    "scripts": {
-        "test": "cargo build && php -d extension=target/debug/libphp_parallel_rust.dylib vendor/bin/pest"
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
+    "autoload": {
+        "psr-4": {
+          "Godruoyi\\Composer\\": "/composer"
         }
     },
-    "php-ext": {
-        "extension-name": "php_parallel",
-        "description": "PHP extension for parallel computing"
+    "extra": {
+        "class": "Godruoyi\\Composer\\InstallerPlugin"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
