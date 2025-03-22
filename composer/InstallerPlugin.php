@@ -50,7 +50,7 @@ class InstallerPlugin implements EventSubscriberInterface, PluginInterface
         $this->io->write("<comment>InstallExtensionAfterPackageInstall - Package name: {$package->getName()}</comment>");
 
         if ($this->isOwnPackage($package->getName())) {
-            $this->installer->install();
+            $this->install();
         }
     }
 
@@ -61,21 +61,22 @@ class InstallerPlugin implements EventSubscriberInterface, PluginInterface
         $this->io->write("<comment>InstallExtensionAfterPackageUpdate - Package name: {$package->getName()}</comment>");
 
         if ($this->isOwnPackage($package->getName())) {
-            $this->installer->install();
+            $this->install();
         }
     }
 
-    private function isOwnPackage($packageName): bool
+    private function isOwnPackage(string $packageName): bool
     {
-        $vendorDir = $this->composer->getConfig()->get('vendor-dir');
-        $projectDir = dirname($vendorDir);
-        $composerJson = file_get_contents($projectDir.'/composer.json');
-        $composerData = json_decode($composerJson, true);
-
-        return str_contains($packageName, $composerData['name'] ?? '');
+        // todo: only install extension when the package is `current` package
+        return true;
     }
 
     private function install(): void
+    {
+        $this->installer->installExtension();
+    }
+
+    private function installxxxx(): void
     {
         $vendorDir = $this->composer->getConfig()->get('vendor-dir');
         $projectDir = dirname($vendorDir);
