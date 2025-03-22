@@ -29,6 +29,13 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, dom, curl
+          tools: composer:v2
+
       - name: Build PHP extension
         run: cargo build --workspace --all-features --release
 
