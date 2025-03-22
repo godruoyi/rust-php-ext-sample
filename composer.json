@@ -15,7 +15,8 @@
         "ext-curl": "*"
     },
     "require-dev": {
-        "composer/composer": "^1.0 || ^2.0"
+        "composer/composer": "^1.0 || ^2.0",
+        "pestphp/pest": "^3.7"
     },
     "autoload": {
         "psr-4": {
@@ -26,5 +27,10 @@
         "class": "Godruoyi\\Composer\\InstallerPlugin"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
 }

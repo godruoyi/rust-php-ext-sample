@@ -1,11 +1,11 @@
 [package]
-name = "php-parallel-rust"
+name = "rust_php_extension_sample"
 version = "0.1.0"
 edition = "2024"
 
 [lib]
 crate-type = ["cdylib"]
-name = "php_parallel_rust"
+name = "rust_php_extension_sample"
 
 [dependencies]
 phper = "0.15.1"

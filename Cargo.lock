@@ -186,13 +186,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "945462a4b81e43c4e3ba96bd7b49d834c6f61198356aa858733bc4acf3cbe62e"
 
 [[package]]
-name = "php-parallel-rust"
-version = "0.1.0"
-dependencies = [
- "phper",
-]
-
-[[package]]
 name = "phper"
 version = "0.15.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -306,6 +299,13 @@ name = "regex-syntax"
 version = "0.8.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2b15c43186be67a4fd63bee50d0303afffcef381492ebe2c5d87f324e1b8815c"
+
+[[package]]
+name = "rust_php_extension_sample"
+version = "0.1.0"
+dependencies = [
+ "phper",
+]
 
 [[package]]
 name = "rustc-hash"

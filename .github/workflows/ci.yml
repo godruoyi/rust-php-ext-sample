@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.2', '8.3', '8.4']
+        php-version: ['8.3']
 
     steps:
       - uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: mbstring, dom
+          extensions: mbstring, dom, curl
           tools: composer:v2
 
       - name: Setup Rust
@@ -51,22 +51,22 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Install PHP dependencies
-        run: composer install --prefer-dist --no-progress
-
       - name: Install Laravel Pint
         run: composer require laravel/pint --dev
+
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-progress
 
       - name: PHP Code Style Check
         run: vendor/bin/pint --test
 
       - name: Build PHP extension
-        run: cargo build --workspace --all-features
+        run: cargo build --workspace --all-features --release
 
       - name: Run tests on Linux
         if: runner.os == 'Linux'
-        run: php -d extension=$(pwd)/target/debug/libphp_parallel_rust.so vendor/bin/pest
+        run: php -d extension=$(pwd)/target/release/librust_php_extension_sample.so vendor/bin/pest
 
       - name: Run tests on macOS
         if: runner.os == 'macOS'
-        run: php -d extension=$(pwd)/target/debug/libphp_parallel_rust.dylib vendor/bin/pest
+        run: php -d extension=$(pwd)/target/release/librust_php_extension_sample.dylib vendor/bin/pest

@@ -15,12 +15,17 @@ class Installer
         $this->io->write('<info>🚀 Installing Rust PHP Extension Sample...</info>');
         $this->printSystemInfos();
 
-        $binaryName = Packager::buildDefaultExtensionName();
-
         try {
-            $binaryPath = $this->downloadExtensionFromGitHub($binaryName);
+            if (! Packager::exists($binaryName = Packager::buildBinaryName())) {
+                $this->io->write('<error>❌ Precompiled extension not found</error>');
+                $this->io->write('<error>   - Please compile the extension from source</error>');
 
-            $this->copyExtensionToPHPExtensionDir($binaryPath);
+                return 1;
+            }
+
+            $binaryPath = Packager::download($binaryName);
+
+            $this->copyExtensionToPHPExtensionDir($binaryPath, Packager::extensionDir());
             $this->tryEnableExtension();
 
             return 0;
@@ -36,15 +41,6 @@ class Installer
         return 1;
     }
 
-    /**
-     * @throws Exception
-     */
-    private function downloadExtensionFromGitHub(string $binaryName): string
-    {
-
-        throw new Exception('Download failed');
-    }
-
     private function printSystemInfos(): void
     {
         $message = Packager::systemInfo();
@@ -54,22 +50,5 @@ class Installer
         $this->io->write("<info>  - PHP Version: {$message['php_version']}</info>");
         $this->io->write("<info>  - Arch: {$message['arch']}</info>");
         $this->io->write("<info>  - Extension Dir: {$message['extension_dir']}</info>");
-    }
-
-    private function download(string $url)
-    {
-        $ch = curl_init($url);
-        $fp = fopen($tempDir.'/'.$extension_filename, 'w+');
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-
-        $success = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        fclose($fp);
-
     }
 }
