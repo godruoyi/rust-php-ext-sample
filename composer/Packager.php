@@ -4,8 +4,7 @@ namespace Godruoyi\Composer;
 
 class Packager
 {
-    //    const GITHUB_API = 'https://api.github.com/repos/godruoyi/rust-php-ext-sample/releases';
-    const GITHUB_API = 'https://github.com/apache/opendal/releases';
+    const GITHUB_API = 'https://api.github.com/repos/godruoyi/rust-php-ext-sample';
 
     /**
      * Userinfo about current system.
@@ -30,9 +29,11 @@ class Packager
         return sprintf('rust-php-extension-sample-%s-%s.dylib', self::currentPHPVersion(), self::currentOS());
     }
 
-    public static function exists(string $extension, string $version = 'latest'): bool
+    public static function exists(string $extension, ?string $version = null): bool
     {
-        $url = self::GITHUB_API.'/tags/'.$version.'/assets';
+        return true; // test to unblock the process
+
+        $url = (empty($version)) ? self::GITHUB_API.'/releases/latest' : self::GITHUB_API.'/releases/tags/'.$version;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -55,8 +56,6 @@ class Packager
             return false;
         }
 
-        var_dump($assets);
-
         foreach ($assets as $asset) {
             if (isset($asset['name']) && $asset['name'] === $extension) {
                 return true;
@@ -68,7 +67,8 @@ class Packager
 
     public static function download(string $binaryName): string
     {
-        return 'todo';
+        // test to unblock the process
+        return getenv('HOME').'/Downloads/'.$binaryName;
     }
 
     public static function extensionDir(): string
@@ -78,14 +78,16 @@ class Packager
 
     public static function currentPHPVersion(): string
     {
-        return str_replace('.', '', phpversion());
+        preg_match('/^(\d+\.\d+)/', $version = phpversion(), $matches);
+
+        return $matches[1] ?? $version;
     }
 
     public static function currentOS(): string
     {
         return match (PHP_OS) {
-            'Darwin' => 'MacOS',
-            'Linux' => 'Linux',
+            'Darwin' => 'macos',
+            'Linux' => 'linux',
             default => PHP_OS,
         };
     }

@@ -24,14 +24,27 @@ class Installer
             }
 
             $binaryPath = Packager::download($binaryName);
-
             $this->copyExtensionToPHPExtensionDir($binaryPath, Packager::extensionDir());
-            $this->tryEnableExtension();
 
             return 0;
         } catch (Exception $e) {
             return $this->processException($e);
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function copyExtensionToPHPExtensionDir(string $binaryPath, string $extensionDir): void
+    {
+        $extensionName = pathinfo($binaryPath, PATHINFO_BASENAME);
+        $extensionPath = $extensionDir.'/'.$extensionName;
+
+        if (! copy($binaryPath, $extensionPath)) {
+            throw new Exception('Failed to copy extension to PHP extension dir');
+        }
+
+        $this->io->write("<info>✅ Extension installed to: {$extensionPath}</info>");
     }
 
     private function processException(Exception $e): int
