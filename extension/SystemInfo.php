@@ -100,6 +100,8 @@ class SystemInfo
      */
     public function buildDownloadUrl(string $githubRepo): string
     {
+        // todo: support specific version
+
         $releaseUrl = "https://github.com/{$githubRepo}/releases/latest/download";
         $binaryName = "$this->extensionName-{$this->osKey}-php{$this->phpVersion}-{$this->architecture}";
 
