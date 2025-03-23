@@ -17,11 +17,9 @@ Then, install the PHP extension by running the following command:
 vendor/bin/install-sample-extension
 ```
 
-## Goals
+## Risks
 
-- [x] Write a simple PHP extension in Rust
-- [x] Build and publish the pre-compiled extension to GitHub releases by using GitHub Actions
-- [x] Install the extension through Composer
-- [x] Run the installation script to install PHP extension
-- [x] Test the extension in a PHP script
-- [x] These all operations should be integrated with GitHub Actions
+1. Package maintainers need to provide pre-compiled binaries for different platforms and PHP versions.
+2. These pre-compiled binary files need to be saved in a certain location, currently GitHub seems to be the most
+   suitable option that can be published with the code repository when new releases are created.
+3. The operation of installing the extension is divided into two steps, which may cause confusion for some users.
