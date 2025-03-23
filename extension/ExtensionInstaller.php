@@ -123,7 +123,7 @@ class ExtensionInstaller
     private function downloadFile($url)
     {
         // Create temp directory
-        $tempDir = sys_get_temp_dir().'/opendal-php-installer-'.uniqid();
+        $tempDir = sys_get_temp_dir().'/php-rust-sample-php-installer-'.uniqid();
         if (! mkdir($tempDir, 0755, true) && ! is_dir($tempDir)) {
             $this->console->error('Failed to create temporary directory.');
 
@@ -277,13 +277,14 @@ class ExtensionInstaller
 
     private function provideBuildFromSourceInstructions(): void
     {
-        $this->console->writeln("\n<info>You need to build the extension from source:</info>");
+        $this->console->writeln();
+        $this->console->info('You need to build the extension from source:');
         $this->console->writeln('1. Ensure you have Rust and PHP development environment installed');
         $this->console->writeln("2. Clone the repository: git clone https://github.com/{$this->githubRepo}.git");
         $this->console->writeln('3. Change to the repository directory: cd php-opendal');
         $this->console->writeln('4. Compile the extension: cargo build --release');
         $this->console->writeln('5. Copy the generated extension file to your PHP extension directory');
         $this->console->writeln('6. Add to your php.ini: extension='.$this->systemInfo->getExtensionFilename());
-        $this->console->writeln("\nFor detailed instructions, visit: https://github.com/{$this->githubRepo}#building-from-source");
+        $this->console->writeln("For detailed instructions, visit: https://github.com/{$this->githubRepo}#building-from-source");
     }
 }
