@@ -14,13 +14,7 @@ composer require godruoyi/rust-php-extension-sample
 Then, install the PHP extension by running the following command:
 
 ```bash
-composer run-script install-rust-php-extension-sample
-```
-
-If you need administrator permission, you can use `sudo`:
-
-```bash
-sudo composer run-script install-rust-php-extension-sample
+vendor/bin/install-sample-extension
 ```
 
 ## Goals
