@@ -1,16 +1,32 @@
-# Write a PHP extension in Rust
+# PHP Extension Installer
 
-This is a test project, mainly used to explore how to write PHP extensions using Rust and 
-install them through Composer directly without PECL and PIE.
+This is a test project, mainly used to explore how to install PHP extensions that are written in Rust. The goal is to
+create a Composer package that can install the PHP extension directly without using PECL or PIE.
+
+## Installation
+
+First, install this package:
+
+```bash
+composer require godruoyi/rust-php-extension-sample
+```
+
+Then, install the PHP extension by running the following command:
+
+```bash
+composer run-script install-rust-php-extension-sample
+```
+
+If you need administrator permission, you can use `sudo`:
+
+```bash
+sudo composer run-script install-rust-php-extension-sample
+```
 
 ## Goals
 
-```
-composer require <vendor>/<package>
-```
-
 - [x] Write a simple PHP extension in Rust
-- [ ] Build and publish the pre-compiled extension to GitHub releases by using GitHub Actions
+- [x] Build and publish the pre-compiled extension to GitHub releases by using GitHub Actions
 - [ ] Install the extension through Composer
   - [ ] Add `post-install` script in `composer.json` to download the pre-compiled extension
   - [ ] Make sure the pre-compiled extension is matched with user's OS and PHP version

@@ -14,10 +14,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest]
+        php-version: ['8.2', '8.3', '8.4']
         include:
           - os: macos-latest
+            platform: macos
             extension: librust_php_extension_sample.dylib
-            php-version: '8.3'
+            extension-suffix: .so
+            arch: x86_64
+          - os: ubuntu-latest
+            platform: linux
+            extension: librust_php_extension_sample.so
+            extension-suffix: .so
+            arch: x86_64
 
     steps:
       - name: Checkout code
@@ -43,8 +52,9 @@ jobs:
         id: artifact
         run: |
           PHP_VERSION="${{ matrix.php-version }}"
-          OS_NAME="macos"∑
-          ARTIFACT_NAME="rust-php-extension-sample-${PHP_VERSION}-${OS_NAME}.dylib"
+          PLATFORM="${{ matrix.platform }}"
+          ARCH="${{ matrix.arch }}"
+          ARTIFACT_NAME="rust_php_extension_sample-${PLATFORM}-php${PHP_VERSION}-${ARCH}-rust_php_extension_sample${{ matrix.extension-suffix }}"
           echo "artifact_name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
 
       - name: Rename extension
@@ -76,4 +86,4 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            rust-php-extension-sample-*/rust-php-extension-sample-*.dylib
+            rust_php_extension_sample-*-php*-*-rust_php_extension_sample.so

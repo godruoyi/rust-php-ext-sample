@@ -1,7 +1,7 @@
 {
     "name": "godruoyi/rust-php-extension-sample",
-    "description": "A sample extension for PHP written in Rust",
-    "type": "composer-plugin",
+    "description": "Installation script for sample rust php extension",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -10,22 +10,21 @@
         }
     ],
     "require": {
-        "php": ">=8.1",
-        "composer-plugin-api": "^1.0 || ^2.0",
-        "ext-curl": "*"
+        "php": ">=8.1"
     },
     "require-dev": {
-        "composer/composer": "^1.0 || ^2.0",
         "pestphp/pest": "^3.7"
     },
     "autoload": {
         "psr-4": {
-          "Godruoyi\\Composer\\": "/composer"
+            "Godruoyi\\Extension\\": [
+                "extension/"
+            ]
         }
     },
-    "extra": {
-        "class": "Godruoyi\\Composer\\InstallerPlugin"
-    },
+    "bin": [
+        "bin/install-sample-extension"
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
