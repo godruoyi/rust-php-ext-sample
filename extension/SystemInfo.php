@@ -44,23 +44,21 @@ class SystemInfo
             case 'Windows':
                 $this->osKey = 'windows';
                 $this->extensionSuffix = '.dll';
-                $this->extensionFilename = $this->extensionName.$this->extensionSuffix;
                 break;
             case 'Darwin': // macOS
                 $this->osKey = 'macos';
                 $this->extensionSuffix = '.so';
-                $this->extensionFilename = $this->extensionName.$this->extensionSuffix;
                 break;
             case 'Linux':
                 $this->osKey = 'linux';
                 $this->extensionSuffix = '.so';
-                $this->extensionFilename = $this->extensionName.$this->extensionSuffix;
                 break;
             default:
                 $this->osKey = strtolower($this->osFamily);
                 $this->extensionSuffix = '.so';
-                $this->extensionFilename = $this->extensionName.$this->extensionSuffix;
         }
+
+        $this->extensionFilename = $this->extensionName.$this->extensionSuffix;
     }
 
     /**
@@ -109,10 +107,18 @@ class SystemInfo
     {
         // todo: support specific version
 
-        $releaseUrl = "https://github.com/{$githubRepo}/releases/latest/download";
-        $binaryName = "$this->extensionName-{$this->osKey}-php{$this->phpVersion}-{$this->architecture}";
+        $releaseUrl = "https://github.com/$githubRepo/releases/latest/download";
 
-        return "{$releaseUrl}/{$binaryName}{$this->extensionSuffix}";
+        // rust_php_extension_sample-linux-php8.2-x86_64.so
+        return sprintf(
+            '%s/%s-%s-php%s-%s%s',
+            $releaseUrl,
+            $this->extensionName,
+            $this->osKey,
+            $this->phpVersion,
+            $this->architecture,
+            $this->extensionSuffix
+        );
     }
 
     /**
@@ -173,15 +179,5 @@ class SystemInfo
     public function getPhpIniPath(): ?string
     {
         return $this->phpIniPath;
-    }
-
-    /**
-     * Get the extension directory
-     *
-     * @return string The extension directory
-     */
-    public function getExtensionDir(): string
-    {
-        return $this->extensionDir;
     }
 }
