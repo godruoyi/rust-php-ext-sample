@@ -54,7 +54,7 @@ jobs:
           PHP_VERSION="${{ matrix.php-version }}"
           PLATFORM="${{ matrix.platform }}"
           ARCH="${{ matrix.arch }}"
-          ARTIFACT_NAME="rust_php_extension_sample-${PLATFORM}-php${PHP_VERSION}-${ARCH}-rust_php_extension_sample${{ matrix.extension-suffix }}"
+          ARTIFACT_NAME="rust_php_extension_sample-${PLATFORM}-php${PHP_VERSION}-${ARCH}${{ matrix.extension-suffix }}"
           echo "artifact_name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
 
       - name: Rename extension
@@ -82,8 +82,8 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          name: Release ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
           draft: false
           prerelease: false
           files: |
-            rust_php_extension_sample-*-php*-*-rust_php_extension_sample.so
+            rust_php_extension_sample-*

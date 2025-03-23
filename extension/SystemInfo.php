@@ -25,6 +25,9 @@ class SystemInfo
     /** @var string The PHP extension name */
     private string $extensionName;
 
+    /** @var string The PHP extension suffix */
+    private string $extensionSuffix;
+
     /** @var string The php.ini file path */
     private string $phpIniPath;
 
@@ -40,19 +43,23 @@ class SystemInfo
         switch ($this->osFamily) {
             case 'Windows':
                 $this->osKey = 'windows';
-                $this->extensionFilename = $this->extensionName.'.dll';
+                $this->extensionSuffix = '.dll';
+                $this->extensionFilename = $this->extensionName.$this->extensionSuffix;
                 break;
             case 'Darwin': // macOS
                 $this->osKey = 'macos';
-                $this->extensionFilename = $this->extensionName.'.so';
+                $this->extensionSuffix = '.so';
+                $this->extensionFilename = $this->extensionName.$this->extensionSuffix;
                 break;
             case 'Linux':
                 $this->osKey = 'linux';
-                $this->extensionFilename = $this->extensionName.'.so';
+                $this->extensionSuffix = '.so';
+                $this->extensionFilename = $this->extensionName.$this->extensionSuffix;
                 break;
             default:
                 $this->osKey = strtolower($this->osFamily);
-                $this->extensionFilename = $this->extensionName.'.so';
+                $this->extensionSuffix = '.so';
+                $this->extensionFilename = $this->extensionName.$this->extensionSuffix;
         }
     }
 
@@ -105,7 +112,7 @@ class SystemInfo
         $releaseUrl = "https://github.com/{$githubRepo}/releases/latest/download";
         $binaryName = "$this->extensionName-{$this->osKey}-php{$this->phpVersion}-{$this->architecture}";
 
-        return "{$releaseUrl}/{$binaryName}-{$this->extensionFilename}";
+        return "{$releaseUrl}/{$binaryName}{$this->extensionSuffix}";
     }
 
     /**
